@@ -24,6 +24,7 @@ package com.m1kah.ui;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.m1kah.app.MessageService;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
@@ -33,10 +34,16 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 @Theme("valo")
+@Configurable
 @SuppressWarnings("serial")
 public class MyVaadinUI extends UI {
+    @Autowired
+    private MessageService messageService;
+
     @WebServlet(value = "/*", asyncSupported = true)
     @VaadinServletConfiguration(productionMode = false, ui = MyVaadinUI.class)
     public static class Servlet extends VaadinServlet {
@@ -51,7 +58,7 @@ public class MyVaadinUI extends UI {
         Button button = new Button("Click Me");
         button.addClickListener(new Button.ClickListener() {
             public void buttonClick(ClickEvent event) {
-                layout.addComponent(new Label("Thank you for clicking"));
+                layout.addComponent(new Label(messageService.getMessage()));
             }
         });
         layout.addComponent(button);

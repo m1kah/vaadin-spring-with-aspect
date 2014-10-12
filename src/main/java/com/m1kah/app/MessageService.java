@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2014 Mika Hämäläinen
+Copyright (c) 2013 Mika Hämäläinen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,20 +20,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
-package com.m1kah.spring.config;
+package com.m1kah.app;
 
-import com.m1kah.app.MessageService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableLoadTimeWeaving;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-
-@Configuration
-@EnableSpringConfigured
-@EnableLoadTimeWeaving
-public class AppConfig {
-    @Bean
-    public MessageService messageService() {
-        return new MessageService();
+public class MessageService {
+    public String getMessage() {
+        return "Thank you for clicking";
     }
 }

@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2014 Mika Hämäläinen
+Copyright (c) 2013 Mika Hämäläinen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,18 +22,19 @@ THE SOFTWARE.
 
 package com.m1kah.spring.config;
 
-import com.m1kah.app.MessageService;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableLoadTimeWeaving;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
-@Configuration
-@EnableSpringConfigured
-@EnableLoadTimeWeaving
-public class AppConfig {
-    @Bean
-    public MessageService messageService() {
-        return new MessageService();
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+public class SpringInitializer implements WebApplicationInitializer {
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+        rootContext.register(AppConfig.class);
+
+        servletContext.addListener(new ContextLoaderListener(rootContext));
     }
 }
